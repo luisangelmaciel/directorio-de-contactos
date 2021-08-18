@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+         :root {
+            --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))
+        }
+        
+        *,
+         ::after,
+         ::before {
+            box-sizing: border-box
+        }
+        
+        .container-publicaciones {
+            width: 100%;
+            padding-right: var(--bs-gutter-x, .75rem);
+            padding-left: var(--bs-gutter-x, .75rem);
+            margin-right: auto;
+            margin-left: auto
+        }
+        
+        @media (min-width:576px) {
+            .container-publicaciones {
+                max-width: 540px
+            }
+        }
+        
+        @media (min-width:768px) {
+            .container-publicaciones {
+                max-width: 720px
+            }
+        }
+        
+        @media (min-width:992px) {
+            .container-publicaciones {
+                max-width: 960px
+            }
+        }
+        
+        @media (min-width:1200px) {
+            .container-publicaciones {
+                max-width: 1140px
+            }
+        }
+        
+        @media (min-width:1400px) {
+            .container-publicaciones {
+                max-width: 1320px
+            }
+        }
+        
+        .nicknamex,
+        h1 .h1publi {
+            margin-top: 0;
+            margin-bottom: .5rem;
+            font-weight: 500;
+            line-height: 1.2;
+            font-size: 2rem
+        }
+        
+        h1 .h1publi {
+            font-size: calc(1.375rem + 1.5vw)
+        }
+        
+        a {
+            text-decoration: none;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            font-size: .1.25em;
+            margin-bottom: 0;
+            color: grey;
+            line-height: 1.25;
+            width: 100%
+        }
+        
+        a:link {
+            text-decoration: none;
+            width: 200%
+        }
+        
+        a:visited {
+            color: black;
+            text-decoration: none;
+            width: 200%
+        }
+        
+        a:hover {
+            color: black;
+            font-family: arial;
+            text-decoration: none;
+            width: 200%
+        }
+        
+        @media (min-width:1200px) {
+            h1 .h1publi {
+                font-size: 3rem
+            }
+        }
+        
+        .nicknamex {
+            font-size: 1rem
+        }
+    </style>
+
+</head>
+
+<body ng-app="directoryApp">
+    <div class="container">
+        <div class="row">
+            <h1>Directorio</h1>
+            <strong> Codigos | Clientes </strong>
+        </div>
+
+
+
+        <div class="row" ng-controller="ListingsController">
+            <div class="col-md-6">
+                <div class="input-group" id="searchBar">
+                    <!-- 
+
+                Implement a way to filter through listings using the search bar 
+
+              -->
+                    <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" class="form-control" placeholder="&#191;A qui&#233;n buscas&#63;" ng-model="searchTerm" debounce="500" immediate="true" ng-change="filterResults()" ng-click="clearSearch()">
+                    <span class="input-group-addon" id="sizing-addon2"><a class="clear" ng-click="clearSearch()">
+              <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    </span>
+                </div>
+                <br>
+                <div class="tableWrapper">
+                    <table class="table table-striped table-hover">
+                        <tr>
+
+                            <th>Nombre</th>
+                            <th></th>
+                        </tr>
+                        <!-- 
+
+                  Fill in the rest of the table:
+                      * populate the rows with the code and name of each listing
+                      * include a way to remove individual listings
+
+                -->
+                        <tr ng-repeat="building in lt" ng-click="showDetails($index)" ng-mouseover="showDetails($index)">
+
+                            <td>{{building.name}}</td>
+                            <td>
+                                <a class="clear" ng-click="deleteListing($index)">
+
+                                </a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <!-- 
+
+              Write an HTML form that adds new listings to the directory 
+
+            -->
+
+                <h4><b>Agregar nuevo cliente</b></h4>
+                <form name="newListingForm" ng-submit="addListing(newListing)">
+                    <fieldset class="form-group">
+                        <input class="form-control" ng-model="newListing.code" type="text" placeholder="Code. TW - Twitter, BUS - Bus, WEB - Web. En caso de que aplique, mes y/o año">
+                        <input class="form-control" ng-model="newListing.name" type="text" placeholder="Nombre con o sin apellido">
+                        <input class="form-control" ng-model="newListing.whatsapp" type="number" placeholder="¿Cuál es su Whatsapp">
+                        <input class="form-control" ng-model="newListing.twitter" type="text" placeholder="¿Tiene Twitter?">
+                        <input class="form-control" ng-model="newListing.email" type=" email " placeholder="¿E-mail? ">
+                        <input class="form-control " ng-model="newListing.cumple " type="text " placeholder="Cuándo Cumpleaños el día ">
+                        <input class="form-control " ng-model="newListing.edad " type="number " placeholder="Edad ">
+                        <input class="form-control " ng-model="newListing.infoExtra" type="text " placeholder="Información extra, si es que aplica ">
+                        <input type=" submit " class="btn btn-primary pull-right " value="Agregar " />
+                    </fieldset>
+                </form>
+
+            </div>
+            <br>
+            <div class="col-md-6 ">
+                <div class="jumbotron ">
+                    <h2><b>&nbsp;&nbsp;&nbsp;&nbsp; Detalles</b></h2>
+                    <!-- 
+
+              Include a way to display detailed information about an individual listing:
+                   * consider how to use ng-click within the the table to implement this feature
+
+             -->
+                    <ul ng-show="showDetailsPane " style="margin-bottom: 1rem; list-style-type: none;">
+                        <li><b>Code:</b> {{detailsCode}}</li>
+                        <li><b>Nombre:</b> {{detailsName}}</li>
+                        <li><b>Whatsapp:</b> {{detailsWhatsapp}}</li>
+                        <li><b>Twitter:</b> {{detailsTwitter}}</li>
+                        <li><b>Cumple:</b> {{detailsCumple}}</li>
+                        <li><b>Edad:</b> {{detailsEdad}}</li>
+                        <li><b>info extra:</b> {{detailsInfoExtra}}</li>
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js " integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin=" anonymous "></script>
+    <script src="https://code.angularjs.org/1.4.3/angular.js "></script>
+    <script src="app.js "></script>
+    <script src="listingController.js "></script>
+    <script src="listingFactory.js "></script>
+</body>
+
+</html>
